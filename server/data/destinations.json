@@ -1,0 +1,1092 @@
+[
+  {
+    "id": "shimla-manali",
+    "name": "Shimla & Manali",
+    "country": "India",
+    "category": "india",
+    "state": "Himachal Pradesh",
+    "tagline": "Snow-capped peaks, pine valleys & thrilling mountain passes",
+    "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.8,
+    "reviewCount": 342,
+    "startingPrice": 14999,
+    "duration": "6 Days / 5 Nights",
+    "bestTimeToVisit": "Oct - June (Snow: Dec-Feb)",
+    "places": [
+      {
+        "name": "Mall Road & The Ridge",
+        "description": "Historic colonial promenade with panoramic valley views and Christ Church.",
+        "image": "https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Solang Valley",
+        "description": "Adventure hotspot famous for skiing, zorbing, and ropeway rides.",
+        "image": "https://images.unsplash.com/photo-1584824486509-112e4181ff6b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Rohtang Pass (13,058 ft)",
+        "description": "Gateway to Lahaul & Spiti with breathtaking glaciers and year-round snow.",
+        "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Hadimba Temple",
+        "description": "450-year-old four-tiered wooden pagoda nestled inside towering cedar forests.",
+        "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Atal Tunnel & Sissu",
+        "description": "World's longest highway tunnel above 10,000 ft connecting to snowy Lahaul waterfalls.",
+        "image": "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "delhi-goa",
+    "name": "Delhi & Goa",
+    "country": "India",
+    "category": "india",
+    "state": "Delhi / Goa",
+    "tagline": "From Mughal heritage capitals to sun-kissed Arabian Sea beaches",
+    "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.7,
+    "reviewCount": 420,
+    "startingPrice": 18499,
+    "duration": "7 Days / 6 Nights",
+    "bestTimeToVisit": "October to April",
+    "places": [
+      {
+        "name": "India Gate & Qutub Minar",
+        "description": "Monumental landmarks showcasing centuries of royal architecture and triumph.",
+        "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Baga & Calangute Beach",
+        "description": "Lively beaches with water sports, beach shacks, music, and vibrant night markets.",
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Fort Aguada",
+        "description": "17th-century Portuguese fortress and lighthouse offering 360-degree ocean views.",
+        "image": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Dudhsagar Waterfalls",
+        "description": "Spectacular 4-tiered 310m milky white waterfall surrounded by lush Bhagwan Mahavir sanctuary.",
+        "image": "https://images.unsplash.com/photo-1546768292-fb12f6c92568?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Basilica of Bom Jesus",
+        "description": "UNESCO World Heritage Baroque cathedral housing mortal remains of St. Francis Xavier.",
+        "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "kashmir",
+    "name": "Kashmir (Paradise on Earth)",
+    "country": "India",
+    "category": "india",
+    "state": "Jammu & Kashmir",
+    "tagline": "Floating shikaras, saffron meadows, and snow-laden alpine valleys",
+    "image": "https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 512,
+    "startingPrice": 21999,
+    "duration": "6 Days / 5 Nights",
+    "bestTimeToVisit": "March to October (Snow: Dec-Feb)",
+    "places": [
+      {
+        "name": "Dal Lake & Houseboat Stay",
+        "description": "Iconic Shikara boat ride, floating vegetable markets, and carved wooden houseboats.",
+        "image": "https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Gulmarg Gondola Ride",
+        "description": "World's second highest operating cable car reaching 13,780 ft on Kongdoori peak.",
+        "image": "https://images.unsplash.com/photo-1566837945700-30057527ade0?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Pahalgam & Betaab Valley",
+        "description": "Lush pine meadows along the crystal Lidder River, famous in Bollywood cinema.",
+        "image": "https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Sonamarg & Thajiwas Glacier",
+        "description": "The 'Meadow of Gold' offering pony treks to glistening perennial snowfields.",
+        "image": "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Shankaracharya Hill & Temple",
+        "description": "Ancient 9th-century Shiva shrine atop hill providing aerial panorama of Srinagar city.",
+        "image": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "mumbai",
+    "name": "Mumbai (City of Dreams)",
+    "country": "India",
+    "category": "india",
+    "state": "Maharashtra",
+    "tagline": "Financial capital glamor, Victorian Gothic architecture & coastal sunsets",
+    "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.7,
+    "reviewCount": 380,
+    "startingPrice": 12999,
+    "duration": "4 Days / 3 Nights",
+    "bestTimeToVisit": "October to March",
+    "places": [
+      {
+        "name": "Gateway of India",
+        "description": "Grand Indo-Saracenic basalt arch built overlooking the bustling Mumbai harbor.",
+        "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Marine Drive (Queen's Necklace)",
+        "description": "3.6 km C-shaped boulevard along Arabian sea, dazzling under street lights at night.",
+        "image": "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Elephanta Caves",
+        "description": "UNESCO rock-cut cave temples dedicated to Lord Shiva on an island ferry ride away.",
+        "image": "https://images.unsplash.com/photo-1600100397608-f010f4438df3?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Juhu Beach & Bandra Bandstand",
+        "description": "Iconic beach famous for Mumbai street chaat, celebrity mansions, and sea breeze.",
+        "image": "https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Bandra-Worli Sea Link & Colaba Causeway",
+        "description": "Feat of modern civil engineering combined with heritage street shopping.",
+        "image": "https://images.unsplash.com/photo-1595658658481-d53d3f999be7?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "kerala",
+    "name": "Kerala (God's Own Country)",
+    "country": "India",
+    "category": "india",
+    "state": "Kerala",
+    "tagline": "Serene backwater houseboats, emerald tea estates & Ayurvedic rejuvenation",
+    "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 490,
+    "startingPrice": 19499,
+    "duration": "6 Days / 5 Nights",
+    "bestTimeToVisit": "September to March",
+    "places": [
+      {
+        "name": "Alleppey Backwaters & Houseboat",
+        "description": "Gliding through palm-fringed canals on a private traditional kettuvallam boat.",
+        "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Munnar Tea Plantations & Eravikulam",
+        "description": "Rolling carpet of emerald tea estates and home to endangered Nilgiri Tahr.",
+        "image": "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Wayanad Edakkal Caves & Waterfalls",
+        "description": "Neolithic rock petroglyphs and cascading mist in the Western Ghats canopy.",
+        "image": "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Fort Kochi & Chinese Nets",
+        "description": "Ancient spice trading hub with colonial Portuguese quarters and giant cantilever fishing nets.",
+        "image": "https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Varkala Cliff Beach",
+        "description": "Dramatic red laterite cliffs bordering the turquoise Arabian sea with beachfront cafes.",
+        "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "jaipur",
+    "name": "Jaipur (The Pink City)",
+    "country": "India",
+    "category": "india",
+    "state": "Rajasthan",
+    "tagline": "Royal palaces, majestic hilltop forts, vibrant bazaars & Rajputana grandeur",
+    "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.8,
+    "reviewCount": 440,
+    "startingPrice": 13999,
+    "duration": "4 Days / 3 Nights",
+    "bestTimeToVisit": "October to March",
+    "places": [
+      {
+        "name": "Amber Fort & Palace",
+        "description": "Magnificent hilltop fortress with Sheesh Mahal (mirror palace) and elephant trails.",
+        "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Hawa Mahal (Palace of Winds)",
+        "description": "Pink sandstone facade featuring 953 intricately carved honeycomb jharokha windows.",
+        "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "City Palace & Chandra Mahal",
+        "description": "Royal residence blending Rajput, Mughal and European architectural finesse.",
+        "image": "https://images.unsplash.com/photo-1592635196078-9fe3d54f2377?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Jal Mahal (Water Palace)",
+        "description": "Serene 5-story palace floating in the center of Man Sagar Lake.",
+        "image": "https://images.unsplash.com/photo-1585135497273-1a86b09fe70e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Nahargarh Fort Sunset Point",
+        "description": "Rugged defense fortress offering stunning evening panoramic city views over Jaipur.",
+        "image": "https://images.unsplash.com/photo-1609137144820-721fbce3b708?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "andaman-nicobar",
+    "name": "Andaman & Nicobar Islands",
+    "country": "India",
+    "category": "india",
+    "state": "Andaman & Nicobar",
+    "tagline": "Powder-white beaches, bioluminescent waters, and premier scuba reefs",
+    "image": "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 365,
+    "startingPrice": 27999,
+    "duration": "6 Days / 5 Nights",
+    "bestTimeToVisit": "October to May",
+    "places": [
+      {
+        "name": "Radhanagar Beach (Havelock)",
+        "description": "Ranked among Asia's best beaches with powder-soft white sand and turquoise tides.",
+        "image": "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Cellular Jail (Port Blair)",
+        "description": "Historic national memorial monument honoring brave Indian freedom fighters.",
+        "image": "https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Elephant Beach Snorkeling Reef",
+        "description": "Premier hotspot for colorful coral reefs, sea walking, and marine life.",
+        "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Ross Island (Netaji Subhash Bose Dweep)",
+        "description": "Atmospheric British ruins entwined with roots of ancient banyan trees and roaming deer.",
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Neil Island (Shaheed Dweep)",
+        "description": "Chilled island paradise with the natural Howrah bridge rock formation and Bharatpur beach.",
+        "image": "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "darjeeling",
+    "name": "Darjeeling & Gangtok",
+    "country": "India",
+    "category": "india",
+    "state": "West Bengal / Sikkim",
+    "tagline": "Golden sunrise on Mount Kanchenjunga, toy trains & aromatic tea gardens",
+    "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.8,
+    "reviewCount": 298,
+    "startingPrice": 16999,
+    "duration": "5 Days / 4 Nights",
+    "bestTimeToVisit": "March to May, Sept to Nov",
+    "places": [
+      {
+        "name": "Tiger Hill Sunrise Point",
+        "description": "Witness the first morning rays gilding Mount Kanchenjunga and Mount Everest.",
+        "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Batasia Loop & War Memorial",
+        "description": "Spiral railway track engineering marvel with 360-degree Himalayan views.",
+        "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Darjeeling Himalayan Heritage Toy Train",
+        "description": "UNESCO World Heritage narrow gauge steam engine chugging through misty hills.",
+        "image": "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Japanese Peace Pagoda",
+        "description": "White gleaming stupa built to unite people of all races and faiths.",
+        "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Happy Valley Tea Estate",
+        "description": "Second oldest tea estate in Darjeeling producing worldwide celebrated Muscatel tea.",
+        "image": "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "leh-ladakh",
+    "name": "Leh - Ladakh",
+    "country": "India",
+    "category": "india",
+    "state": "Ladakh",
+    "tagline": "Moon landscapes, crystal blue alpine lakes & highest motorable mountain passes",
+    "image": "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 485,
+    "startingPrice": 24999,
+    "duration": "7 Days / 6 Nights",
+    "bestTimeToVisit": "May to September",
+    "places": [
+      {
+        "name": "Pangong Tso Lake",
+        "description": "Endorheic lake at 14,270 ft that changes colors from azure to emerald to deep purple.",
+        "image": "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Nubra Valley & Hunder Sand Dunes",
+        "description": "High altitude desert with double-humped Bactrian camel safaris under jagged peaks.",
+        "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Khardung La Pass (17,982 ft)",
+        "description": "One of the highest motorable road passes in the world and every biker's dream.",
+        "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Magnetic Hill",
+        "description": "Gravity-defying optical illusion hill where parked vehicles seem to roll uphill.",
+        "image": "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Thiksey & Diskit Monasteries",
+        "description": "12-story whitewashed Tibetan Buddhist monastery housing a 49 ft Maitreya Buddha statue.",
+        "image": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "meghalaya",
+    "name": "Meghalaya (Abode of Clouds)",
+    "country": "India",
+    "category": "india",
+    "state": "Meghalaya",
+    "tagline": "Living root bridges, roaring waterfalls, crystal rivers & sacred monolith groves",
+    "image": "https://images.unsplash.com/photo-1742494267580-e026d3737f65?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 310,
+    "startingPrice": 17999,
+    "duration": "6 Days / 5 Nights",
+    "bestTimeToVisit": "October to April",
+    "places": [
+      {
+        "name": "Double Decker Living Root Bridge (Nongriat)",
+        "description": "Centuries-old bio-engineered living tree roots woven by Khasi tribes over roaring streams.",
+        "image": "https://images.unsplash.com/photo-1742494267580-e026d3737f65?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Cherrapunji & Nohkalikai Falls",
+        "description": "India's tallest plunge waterfall (1,115 ft) cascading into a surreal turquoise pool.",
+        "image": "https://images.unsplash.com/photo-1689089526066-c7e6e95ee265?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Dawki Umngot River",
+        "description": "Crystal-clear glass river where boats look like they are floating in mid-air.",
+        "image": "https://images.unsplash.com/photo-1715939050928-c504fc215456?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Mawlynnong Village",
+        "description": "Acclaimed as Asia's cleanest village with bamboo sky-walks and community orchards.",
+        "image": "https://images.unsplash.com/photo-1593813738953-fb3c93e0769d?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Mawsmai & Arwah Caves",
+        "description": "Illuminated limestone cave systems showcasing ancient million-year marine fossils.",
+        "image": "https://images.unsplash.com/photo-1686472886489-1d2d7e08ff9c?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "dubai",
+    "name": "Dubai & Abu Dhabi",
+    "country": "United Arab Emirates",
+    "category": "international",
+    "tagline": "World's tallest marvels, golden sand safaris & ultra-modern luxury",
+    "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 680,
+    "startingPrice": 48999,
+    "duration": "5 Days / 4 Nights",
+    "bestTimeToVisit": "November to April",
+    "places": [
+      {
+        "name": "Burj Khalifa (124th & 148th Floor)",
+        "description": "World's tallest skyscraper standing at 828m with views stretching to the desert horizon.",
+        "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Desert Safari with BBQ & Dune Bashing",
+        "description": "4x4 roller-coaster thrill through golden dunes with falconry, fire show, and Arabic feast.",
+        "image": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Palm Jumeirah & Atlantis",
+        "description": "Iconic palm tree-shaped man-made archipelago home to luxury beach resorts and waterparks.",
+        "image": "https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Museum of the Future",
+        "description": "Architectural marvel covered in Arabic calligraphy showcasing next-century innovations.",
+        "image": "https://images.unsplash.com/photo-1582650625119-3a31f8418399?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Dubai Mall & Dancing Fountains",
+        "description": "World's largest shopping and entertainment destination with choreographed water show.",
+        "image": "https://images.unsplash.com/photo-1578895101408-1a36b834405b?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "japan",
+    "name": "Japan (Tokyo, Kyoto & Osaka)",
+    "country": "Japan",
+    "category": "international",
+    "tagline": "Futuristic neon metropolises, cherry blossoms & timeless Shinto shrines",
+    "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.95,
+    "reviewCount": 540,
+    "startingPrice": 115000,
+    "duration": "8 Days / 7 Nights",
+    "bestTimeToVisit": "March to May, Sept to Nov",
+    "places": [
+      {
+        "name": "Mount Fuji & Lake Kawaguchiko",
+        "description": "Iconic snow-capped sacred volcano reflected on serene lake waters.",
+        "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Kyoto Fushimi Inari Shrine",
+        "description": "Sprawling mountain shrine famous for 10,000 vibrant vermilion Torii gates.",
+        "image": "https://images.unsplash.com/photo-1478436127897-769e00d2c715?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Tokyo Shibuya Crossing & Shinjuku",
+        "description": "The world's busiest pedestrian scramble alive with futuristic LED towers.",
+        "image": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Osaka Dotonbori",
+        "description": "Neon-drenched food mecca famous for street takoyaki, okonomiyaki, and Glico Man.",
+        "image": "https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Nara Deer Park",
+        "description": "Historic capital park where over 1,000 friendly sacred deer bow for treats.",
+        "image": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "bali",
+    "name": "Bali (Island of the Gods)",
+    "country": "Indonesia",
+    "category": "international",
+    "tagline": "Volcanic sunrises, cliffside temples, turquoise beaches & lush rice terraces",
+    "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 610,
+    "startingPrice": 39999,
+    "duration": "6 Days / 5 Nights",
+    "bestTimeToVisit": "April to October",
+    "places": [
+      {
+        "name": "Ubud Monkey Forest & Rice Terraces",
+        "description": "Ancient sacred temple forest with macaques and cascading Tegallalang terraces.",
+        "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Tanah Lot Sunset Temple",
+        "description": "Ancient Hindu pilgrimage temple perched upon an offshore wave-swept rock outcrop.",
+        "image": "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Nusa Penida & Kelingking T-Rex Beach",
+        "description": "Jaw-dropping T-Rex cliff formation jutting into iridescent turquoise waters.",
+        "image": "https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Mount Batur Sunrise Trek",
+        "description": "Hike up an active volcano at dawn to watch sunrise above the cloud bank.",
+        "image": "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Seminyak & Canggu Beach Clubs",
+        "description": "Sun, surf, artisanal cafes, and world-class beachfront infinity pools.",
+        "image": "https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "turkey",
+    "name": "Turkey (Istanbul & Cappadocia)",
+    "country": "Turkey",
+    "category": "international",
+    "tagline": "Fairytale hot air balloons, Byzantine domes & Roman thermal springs",
+    "image": "https://images.unsplash.com/photo-1527838832700-5059252407fa?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.85,
+    "reviewCount": 430,
+    "startingPrice": 69999,
+    "duration": "7 Days / 6 Nights",
+    "bestTimeToVisit": "April to June, Sept to Nov",
+    "places": [
+      {
+        "name": "Cappadocia Hot Air Balloon Flight",
+        "description": "Soar above fairy chimneys, subterranean troglodyte caves, and volcanic valleys at sunrise.",
+        "image": "https://images.unsplash.com/photo-1527838832700-5059252407fa?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Hagia Sophia & Blue Mosque",
+        "description": "Magnificent Byzantine dome and 6 minarets standing opposite each other in Sultanahmet.",
+        "image": "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Pamukkale Thermal Travertine Terraces",
+        "description": "Gleaming white calcium pools filled with warm mineral waters overlooking ruins of Hierapolis.",
+        "image": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Bosphorus Strait Cruise",
+        "description": "Scenic boat journey dividing Europe and Asia flanked by Ottoman waterfront palaces.",
+        "image": "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Grand Bazaar & Spice Market",
+        "description": "World's largest covered bazaar with 4,000 shops of lamps, kilims, baklava, and teas.",
+        "image": "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "switzerland",
+    "name": "Switzerland (Swiss Alps & Lakes)",
+    "country": "Switzerland",
+    "category": "international",
+    "tagline": "Jungfraujoch Top of Europe, Mount Titlis glaciers & crystal blue alpine lakes",
+    "image": "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.95,
+    "reviewCount": 590,
+    "startingPrice": 139999,
+    "duration": "7 Days / 6 Nights",
+    "bestTimeToVisit": "May to October (Snow: Dec-March)",
+    "places": [
+      {
+        "name": "Jungfraujoch (Top of Europe - 11,332 ft)",
+        "description": "Europe's highest railway station leading to Ice Palace and Aletsch Glacier.",
+        "image": "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Mount Titlis & Rotair Revolving Cable Car",
+        "description": "First revolving cable car ride to cliff walk suspension bridge and eternal snow.",
+        "image": "https://images.unsplash.com/photo-1491555103944-7c647fd857e6?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Interlaken Adventure Valley",
+        "description": "Charming alpine resort nestled between Lake Thun and Lake Brienz.",
+        "image": "https://images.unsplash.com/photo-1527668752968-14dc70a27c95?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Lucerne & Chapel Bridge",
+        "description": "14th-century wooden covered bridge with swans on the lake against mountain backdrops.",
+        "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Zermatt & Matterhorn Peak",
+        "description": "Car-free village under the shadow of the world's most photographed pyramid mountain.",
+        "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "london",
+    "name": "London & Oxford",
+    "country": "United Kingdom",
+    "category": "international",
+    "tagline": "Royal palaces, Big Ben chimes, red double-deckers & River Thames landmarks",
+    "image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.8,
+    "reviewCount": 475,
+    "startingPrice": 98000,
+    "duration": "6 Days / 5 Nights",
+    "bestTimeToVisit": "May to October",
+    "places": [
+      {
+        "name": "Big Ben & Palace of Westminster",
+        "description": "Neo-Gothic seat of the British Parliament on the banks of River Thames.",
+        "image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Tower Bridge & Tower of London",
+        "description": "Victorian twin-tower bascule bridge and fortress housing the Crown Jewels.",
+        "image": "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "London Eye Observation Wheel",
+        "description": "135m cantilevered observation wheel with unmatched 360-degree cityscape views.",
+        "image": "https://images.unsplash.com/photo-1486299267070-83823f5448dd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Buckingham Palace & Changing of Guard",
+        "description": "Official London residence of the British Monarch with ceremonial state rooms.",
+        "image": "https://images.unsplash.com/photo-1520986606214-8b456906c813?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "British Museum & Oxford University",
+        "description": "Historic treasures like the Rosetta Stone combined with a day trip to dreaming spires.",
+        "image": "https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "paris",
+    "name": "Paris (City of Lights)",
+    "country": "France",
+    "category": "international",
+    "tagline": "Sparkling Eiffel Tower, art masterpieces, romantic Seine & sidewalk cafes",
+    "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 630,
+    "startingPrice": 105000,
+    "duration": "6 Days / 5 Nights",
+    "bestTimeToVisit": "April to October",
+    "places": [
+      {
+        "name": "Eiffel Tower & Trocadéro",
+        "description": "330m wrought-iron icon shimmering with 20,000 sparkling lights every night.",
+        "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Louvre Museum",
+        "description": "Former royal palace housing Leonardo da Vinci's Mona Lisa and Venus de Milo.",
+        "image": "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Arc de Triomphe & Champs-Élysées",
+        "description": "Triumphal arch honoring French military victories at the top of the luxury avenue.",
+        "image": "https://images.unsplash.com/photo-1509439581779-6298f75bf6e5?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Seine River Cruise & Notre-Dame",
+        "description": "Romantic boat cruise past historic bridges and the restored Gothic cathedral.",
+        "image": "https://images.unsplash.com/photo-1471623432079-b009d30b6729?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Montmartre & Sacré-Cœur",
+        "description": "Bohemian hilltop district with cobblestone alleys and panoramic view over Paris.",
+        "image": "https://images.unsplash.com/photo-1522093007474-d86e9bf7ba6f?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "singapore",
+    "name": "Singapore",
+    "country": "Singapore",
+    "category": "international",
+    "tagline": "Futuristic Supertree Grove, rooftop infinity pools & world-class theme parks",
+    "image": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 510,
+    "startingPrice": 52999,
+    "duration": "5 Days / 4 Nights",
+    "bestTimeToVisit": "All Year Round (November to April popular)",
+    "places": [
+      {
+        "name": "Marina Bay Sands & SkyPark",
+        "description": "Iconic tri-tower hotel topped with a ship-shaped SkyPark and infinity pool overlooking the bay.",
+        "image": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Gardens by the Bay & Flower Dome",
+        "description": "Futuristic vertical gardens, Supertree light show, and giant indoor Cloud Forest waterfall.",
+        "image": "https://images.unsplash.com/photo-1506351421178-63b52a2d15c2?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Sentosa Island & Universal Studios",
+        "description": "Thrill rides, movie sets, beach resorts, and giant S.E.A. Aquarium.",
+        "image": "https://images.unsplash.com/photo-1565967511849-76a60a516170?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Jewel Changi Rain Vortex",
+        "description": "World's tallest indoor waterfall cascading through 7 storeys of lush forest valley.",
+        "image": "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Merlion Park & Chinatown",
+        "description": "Singapore's mythical half-lion half-fish national icon and vibrant heritage streets.",
+        "image": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "malaysia",
+    "name": "Malaysia (Kuala Lumpur & Langkawi)",
+    "country": "Malaysia",
+    "category": "international",
+    "tagline": "Petronas sky bridges, limestone caves, cable cars & duty-free island beaches",
+    "image": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.8,
+    "reviewCount": 420,
+    "startingPrice": 38999,
+    "duration": "6 Days / 5 Nights",
+    "bestTimeToVisit": "December to April",
+    "places": [
+      {
+        "name": "Petronas Twin Towers",
+        "description": "Soaring 452m twin towers joined by a double-decker skybridge on the 41st floor.",
+        "image": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Batu Caves & Murugan Statue",
+        "description": "Dramatic 272 rainbow steps leading into 400-million-year-old limestone cavern temples.",
+        "image": "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Langkawi Sky Bridge & Cable Car",
+        "description": "Curved suspension bridge hanging 660m above sea level with views of Thailand.",
+        "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Genting Highlands Resort",
+        "description": "High altitude hill station with indoor/outdoor theme parks and cable cars.",
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Penang George Town Heritage Art",
+        "description": "UNESCO World Heritage streets decorated with interactive 3D murals and street food.",
+        "image": "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "maldives",
+    "name": "Maldives (Private Atolls)",
+    "country": "Maldives",
+    "category": "international",
+    "tagline": "Overwater villas with glass floors, manta ray snorkeling & turquoise lagoons",
+    "image": "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.95,
+    "reviewCount": 580,
+    "startingPrice": 65999,
+    "duration": "5 Days / 4 Nights",
+    "bestTimeToVisit": "November to April",
+    "places": [
+      {
+        "name": "Luxury Overwater Pool Villa",
+        "description": "Step down directly from your private sun-deck into warm turquoise crystalline waters.",
+        "image": "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Maafushi Coral Reef Snorkeling",
+        "description": "Swim alongside sea turtles, harmless reef sharks, and kaleidoscope coral beds.",
+        "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Banana Reef Deep Scuba Dive",
+        "description": "Maldives' first discovered dive site with dramatic underwater overhangs and marine life.",
+        "image": "https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Sunset Dolphin Cruise",
+        "description": "Sail out into the Indian Ocean as pods of wild spinner dolphins jump around the bow.",
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Male City Heritage & Fish Market",
+        "description": "Golden Grand Mosque dome, bustling fresh tuna auction, and island culture.",
+        "image": "https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "usa",
+    "name": "USA (East to West Coast)",
+    "country": "United States",
+    "category": "international",
+    "tagline": "Times Square neon, Grand Canyon depths, Las Vegas glamour & Golden Gate bridge",
+    "image": "https://images.unsplash.com/photo-1506146332389-18140dc7b2fb?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 495,
+    "startingPrice": 185000,
+    "duration": "10 Days / 9 Nights",
+    "bestTimeToVisit": "May to October",
+    "places": [
+      {
+        "name": "Times Square & Statue of Liberty (NYC)",
+        "description": "Broadway neon lights and the torch of freedom in New York harbor.",
+        "image": "https://images.unsplash.com/photo-1506146332389-18140dc7b2fb?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Grand Canyon Skywalk (Arizona)",
+        "description": "Mile-deep natural canyon gorge carved by the Colorado River over millions of years.",
+        "image": "https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Las Vegas Strip & Bellagio Fountains",
+        "description": "Entertainment capital of the world with extravagant casinos, world-class dining, and shows.",
+        "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Los Angeles & Hollywood Walk of Fame",
+        "description": "Movie studios, Beverly Hills celebrity mansions, and sunset at Santa Monica Pier.",
+        "image": "https://images.unsplash.com/photo-1580655653885-65763b2597d0?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "San Francisco & Golden Gate Bridge",
+        "description": "World-famous orange suspension bridge, historic cable cars, and Fisherman's Wharf.",
+        "image": "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "trekking",
+    "name": "Alpine & Himalayan Trekking",
+    "country": "India / Nepal",
+    "category": "adventure",
+    "tagline": "Conquer summit ridges, glacier moraines & high altitude snow passes",
+    "image": "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 380,
+    "startingPrice": 11999,
+    "duration": "5 to 7 Days",
+    "bestTimeToVisit": "All Year (Winter snow or Summer green)",
+    "places": [
+      {
+        "name": "Kedarkantha Summit (12,500 ft)",
+        "description": "Classic winter snow trek with 360-degree panorama of 13 Himalayan peaks.",
+        "image": "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Triund Ridge (Dharamshala)",
+        "description": "Picturesque day/night trek overlooking the mighty Dhauladhar ranges and Kangra valley.",
+        "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Hampta Pass & Chandratal Lake",
+        "description": "Dramatic crossover trek from Kullu's green pine forest to Spiti's stark moonscapes.",
+        "image": "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Valley of Flowers & Hemkund Sahib",
+        "description": "UNESCO World Heritage blooming alpine meadow bursting with 500 species of rare wildflowers.",
+        "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Roopkund Mystery Lake Trek",
+        "description": "High altitude glacial lake nestled amidst Trishul and Nanda Ghunti massifs.",
+        "image": "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "river-rafting",
+    "name": "White Water River Rafting",
+    "country": "India",
+    "category": "adventure",
+    "tagline": "Tackle roaring Grade III & IV rapids, cliff jumps & river bank camping",
+    "image": "https://images.unsplash.com/photo-1530866495561-507c9faab2ed?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 420,
+    "startingPrice": 3499,
+    "duration": "2 to 3 Days",
+    "bestTimeToVisit": "September to June",
+    "places": [
+      {
+        "name": "Rishikesh Ganges (Grade IV Rapids)",
+        "description": "Famous rapids including 'The Wall', 'Roller Coaster', and 'Golf Course' over 16-36 km.",
+        "image": "https://images.unsplash.com/photo-1530866495561-507c9faab2ed?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Kundalika River (Kolad, Maharashtra)",
+        "description": "Only round-the-year white water rafting destination in Western India fed by dam water release.",
+        "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Zanskar River Expedition (Ladakh)",
+        "description": "World's most remote high-altitude gorge rafting expedition through frozen canyon walls.",
+        "image": "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Teesta River (Sikkim & Kalimpong)",
+        "description": "Challenging white-water rapids rushing past rhododendron hills and alpine valleys.",
+        "image": "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Barapole River (Coorg, Karnataka)",
+        "description": "Thrilling rapids running through thick Bramhagiri evergreen jungle.",
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "paragliding",
+    "name": "Tandem & Solo Paragliding",
+    "country": "India / Nepal",
+    "category": "adventure",
+    "tagline": "Fly like a bird above lush valleys, tea gardens & snow-capped peaks",
+    "image": "https://images.unsplash.com/photo-1530007874544-a6f7674b5a47?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.85,
+    "reviewCount": 350,
+    "startingPrice": 3999,
+    "duration": "1 to 2 Days",
+    "bestTimeToVisit": "October to June",
+    "places": [
+      {
+        "name": "Bir Billing (World Cup Site, Himachal)",
+        "description": "Ranked #2 paragliding spot on Earth with 8,000 ft launch and 30-min thermalling flight.",
+        "image": "https://images.unsplash.com/photo-1620720970374-5b7e67e1e610?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Solang Valley (Manali)",
+        "description": "Tandem flights over deodar pine forests and Rohtang glacier slopes.",
+        "image": "https://images.unsplash.com/photo-1719949122509-74d0a1d08b44?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Kamshet (Western Ghats, Maharashtra)",
+        "description": "Premier paragliding school hub overlooking Pavana lake and ancient rock-cut caves.",
+        "image": "https://images.unsplash.com/photo-1503149779833-1de50ebe5f8a?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Pokhara Sarangkot (Nepal)",
+        "description": "Gliding directly in front of the 8,000m Annapurna Range landing on Phewa Lake.",
+        "image": "https://images.unsplash.com/photo-1471247511763-88a722fc9919?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Vagamon (Kerala)",
+        "description": "Soaring over rolling mist-covered meadows and pine plantations in South India.",
+        "image": "https://images.unsplash.com/photo-1517483000871-1dbf64a6e1c6?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "camping",
+    "name": "Wilderness Camping & Stargazing",
+    "country": "India",
+    "category": "adventure",
+    "tagline": "Bonfires under the Milky Way, lakeside swiss tents & desert night safaris",
+    "image": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.8,
+    "reviewCount": 410,
+    "startingPrice": 2499,
+    "duration": "2 to 3 Days",
+    "bestTimeToVisit": "October to April",
+    "places": [
+      {
+        "name": "Pawna Lake Camping (Lonavala)",
+        "description": "Scenic waterfront tents with live acoustic music, BBQ, and morning kayaking.",
+        "image": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Spiti Valley High Altitude Camp",
+        "description": "Zero light pollution sky for astrophotography under galaxy arms at 14,000 ft.",
+        "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Jaisalmer Sam Sand Dunes (Thar Desert)",
+        "description": "Royal Swiss luxury tents with camel rides, Rajasthani folk dances, and campfire tales.",
+        "image": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Rishikesh Riverside Camp (Shivpuri)",
+        "description": "White sand beach tents along the clean upper Ganges with beach volleyball and bonfires.",
+        "image": "https://images.unsplash.com/photo-1530866495561-507c9faab2ed?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Wayanad Treehouse & Forest Camp",
+        "description": "Sleep among canopy foliage listening to cicadas and rainforest wildlife.",
+        "image": "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "scuba-diving",
+    "name": "Scuba Diving & Coral Exploration",
+    "country": "India / Maldives",
+    "category": "adventure",
+    "tagline": "Discover underwater kingdoms, shipwrecks, turtles & rainbow marine life",
+    "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.9,
+    "reviewCount": 360,
+    "startingPrice": 5999,
+    "duration": "1 to 3 Days",
+    "bestTimeToVisit": "October to May",
+    "places": [
+      {
+        "name": "Havelock Island Reefs (Andaman)",
+        "description": "PADI certified world-class dive sites with 30m visibility and vibrant coral gardens.",
+        "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Netrani Island (Pigeon Island, Murudeshwar)",
+        "description": "Heart-shaped island in Arabian Sea teeming with butterfly fish, stingrays, and corals.",
+        "image": "https://images.unsplash.com/photo-1582967788606-a171c1080cb0?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Grande Island (Goa)",
+        "description": "Snorkel and dive alongside sunken Portuguese cargo wrecks and dolphin pods.",
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Malvan & Tarkarli (Maharashtra)",
+        "description": "Pristine clear coastal waters overlooking historic Sindhudurg maritime fort.",
+        "image": "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Lakshadweep Kadmat Island",
+        "description": "Untouched turquoise lagoon featuring sea turtles and untouched brain corals.",
+        "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  },
+  {
+    "id": "bungee-jumping",
+    "name": "Bungee & Extreme Cliff Jumping",
+    "country": "India",
+    "category": "adventure",
+    "tagline": "Defy gravity with India's highest 83m jumps, giant swings & flying foxes",
+    "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1000&q=80",
+    "rating": 4.95,
+    "reviewCount": 290,
+    "startingPrice": 4499,
+    "duration": "1 Day",
+    "bestTimeToVisit": "October to June",
+    "places": [
+      {
+        "name": "Mohan Chatti (Rishikesh - 83m / 272 ft)",
+        "description": "India's highest fixed-platform bungee jump operated by New Zealand jump masters.",
+        "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Flying Fox Rishikesh (Asia's Longest 1 km)",
+        "description": "Soar at 140 km/h suspended 120m above the roaring Himalayan river bed.",
+        "image": "https://images.unsplash.com/photo-1508873696983-2df5293cb32b?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Mayem Lake Bungee (Goa - 55m)",
+        "description": "Plunge down towards tranquil lake waters in lush Bicholim surroundings.",
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Kolad Giant Swing & Flying Fox",
+        "description": "High adrenaline canyon swing over the Kundalika river rapids.",
+        "image": "https://images.unsplash.com/photo-1530866495561-507c9faab2ed?auto=format&fit=crop&w=600&q=80"
+      },
+      {
+        "name": "Della Adventure Bungee (Lonavala - 45m)",
+        "description": "Adrenaline crane jump with full hydraulic safety gear in the Sahyadris.",
+        "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+      }
+    ]
+  }
+]

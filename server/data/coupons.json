@@ -1,0 +1,101 @@
+{
+  "coupons": [
+    {
+      "code": "ORBITNEW",
+      "type": "flat",
+      "value": 2500,
+      "minSpend": 10000,
+      "description": "Flat ₹2,500 off for first-time Orbit Explorers!",
+      "expiry": "2026-12-31",
+      "applicableCategory": "all"
+    },
+    {
+      "code": "SUMMER2026",
+      "type": "percentage",
+      "value": 15,
+      "maxDiscount": 7500,
+      "minSpend": 15000,
+      "description": "15% OFF up to ₹7,500 on all Summer packages!",
+      "expiry": "2026-08-31",
+      "applicableCategory": "all"
+    },
+    {
+      "code": "DIWALI25",
+      "type": "flat",
+      "value": 5000,
+      "minSpend": 40000,
+      "description": "Festive Special: Flat ₹5,000 off on International Escapes",
+      "expiry": "2026-11-30",
+      "applicableCategory": "international"
+    },
+    {
+      "code": "ADVENTURE10",
+      "type": "percentage",
+      "value": 10,
+      "maxDiscount": 3000,
+      "minSpend": 5000,
+      "description": "10% instant discount on all Adventure and Trekking tours",
+      "expiry": "2026-12-31",
+      "applicableCategory": "adventure"
+    },
+    {
+      "code": "VIPORBIT",
+      "type": "percentage",
+      "value": 20,
+      "maxDiscount": 15000,
+      "minSpend": 25000,
+      "description": "Exclusive 20% off for Go Orbit Elite loyalty members",
+      "expiry": "2026-12-31",
+      "applicableCategory": "all"
+    }
+  ],
+  "multiPackageDiscounts": [
+    {
+      "minPackages": 2,
+      "discountPercent": 10,
+      "label": "Double Destination Bundle (10% Extra Off)"
+    },
+    {
+      "minPackages": 3,
+      "discountPercent": 15,
+      "label": "Grand Tour Explorer Bundle (15% Extra Off)"
+    }
+  ],
+  "loyaltyTiers": {
+    "standard": {
+      "name": "Orbit Starter",
+      "discountPercent": 0,
+      "perks": ["Standard booking support", "Earn Orbit miles"]
+    },
+    "regular": {
+      "name": "Orbit Explorer (Regular)",
+      "discountPercent": 5,
+      "perks": ["5% auto-discount on all packages", "Priority customer care", "Free itinerary cancellation"]
+    },
+    "vip": {
+      "name": "Orbit Pioneer (VIP Gold)",
+      "discountPercent": 10,
+      "perks": ["10% auto-discount on all packages", "Complimentary airport transfers", "Free room upgrade when available"]
+    }
+  },
+  "seasonalEvents": [
+    {
+      "id": "himalayan-summer-fest",
+      "title": "Himalayan Summer & Alps Fest 2026",
+      "tagline": "Beat the heat! Save up to 15% on high altitude & mountain escapes",
+      "discountPercent": 15,
+      "bannerColor": "from-sky-600 via-indigo-600 to-blue-700",
+      "isActive": true,
+      "validUntil": "2026-07-31"
+    },
+    {
+      "id": "monsoon-magic",
+      "title": "Monsoon Kerala & Western Ghats",
+      "tagline": "Lush waterfalls and tea mist at 12% special season discount",
+      "discountPercent": 12,
+      "bannerColor": "from-emerald-600 via-teal-600 to-cyan-700",
+      "isActive": false,
+      "validUntil": "2026-09-30"
+    }
+  ]
+}

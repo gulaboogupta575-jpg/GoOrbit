@@ -1,0 +1,14 @@
+[
+  {
+    "id": "usr-admin-nidhi",
+    "name": "Nidhi Gupta",
+    "email": "nidhigupta3139@gmail.com",
+    "phone": "9769723139",
+    "password": "dadd68230e93db859c4733fbed53245c:4620841673f8de0a913c8eaa998519b86b52e412ff63f48ad49a9e628df6ad55ef801f8e408c20788ce47ee34fabe70b25a0d0c67d96a0ff770360023d8b3f8d",
+    "tier": "vip",
+    "role": "admin",
+    "isVerified": true,
+    "createdAt": "2026-10-08T07:29:00.000Z",
+    "lastLogin": "2026-10-08T09:32:37.057Z"
+  }
+]
