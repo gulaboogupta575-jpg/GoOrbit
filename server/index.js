@@ -4,12 +4,32 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
+const {
+  validatePassword,
+  validateEmail,
+  createSessionToken,
+  verifySessionToken,
+  parseCookies,
+  checkRateLimit,
+  recordFailedAttempt,
+  clearFailedAttempts
+} = require('./services/authSecurity');
 
 const app = express();
 const PORT = process.env.PORT || 5005;
 
-app.use(cors());
+// CORS with credentials support for HttpOnly cookies
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 app.use(express.json());
+
+// Custom cookie parsing middleware
+app.use((req, res, next) => {
+  req.cookies = parseCookies(req.headers.cookie);
+  next();
+});
 
 // Ensure uploads folder exists
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -747,7 +767,7 @@ const sanitizeUser = (u) => ({
   lastLogin: u.lastLogin
 });
 
-// 9.1 Simple Direct Sign Up -> Saves account with password hash in database (No OTP)
+// 9.1 Secure Sign Up -> Saves account with scrypt password hash in database
 const handleDirectSignUp = (req, res) => {
   const { name, email, phone, password } = req.body;
 
@@ -758,25 +778,28 @@ const handleDirectSignUp = (req, res) => {
     });
   }
 
-  const cleanPass = password.toString().trim();
-  if (cleanPass.length < 6) {
-    return res.status(400).json({ 
-      success: false, 
-      error: 'Password must be at least 6 characters long.' 
+  // 1. Validate password complexity (>= 8 chars, 1 digit, 1 special char)
+  const passwordCheck = validatePassword(password);
+  if (!passwordCheck.valid) {
+    return res.status(400).json({
+      success: false,
+      error: passwordCheck.error
     });
   }
 
-  const users = getData('users.json');
-  const cleanEmail = email.toLowerCase().trim();
+  const cleanPass = passwordCheck.password;
+  const cleanEmail = email.toString().toLowerCase().trim();
   const cleanPhone = phone.toString().trim().replace(/\D/g, '');
 
-  if (!cleanEmail.includes('@') || !cleanEmail.includes('.')) {
+  // 2. Validate email format
+  if (!validateEmail(cleanEmail)) {
     return res.status(400).json({
       success: false,
       error: 'Please enter a valid email address (e.g. name@example.com).'
     });
   }
 
+  // 3. Validate phone number length
   if (cleanPhone.length < 10) {
     return res.status(400).json({
       success: false,
@@ -784,7 +807,9 @@ const handleDirectSignUp = (req, res) => {
     });
   }
 
-  // Check duplicate email
+  const users = getData('users.json');
+
+  // 4. Check duplicate email
   const existingByEmail = users.find(u => (u.email || '').toLowerCase().trim() === cleanEmail);
   if (existingByEmail) {
     return res.status(409).json({
@@ -796,7 +821,7 @@ const handleDirectSignUp = (req, res) => {
     });
   }
 
-  // Check duplicate phone
+  // 5. Check duplicate phone
   const phone10 = normalizePhone(cleanPhone);
   const existingByPhone = users.find(u => normalizePhone(u.phone) === phone10);
   if (existingByPhone) {
@@ -809,7 +834,7 @@ const handleDirectSignUp = (req, res) => {
     });
   }
 
-  // Create new user with hashed password for privacy (Only nidhigupta3139@gmail.com can have admin privileges)
+  // 6. Create new user with hashed password (Only nidhigupta3139@gmail.com has admin role)
   const isSoleAdmin = cleanEmail === ADMIN_EMAIL;
   const newUser = {
     id: 'usr-' + Date.now(),
@@ -829,21 +854,42 @@ const handleDirectSignUp = (req, res) => {
 
   console.log(`[Go Orbit Auth] User Registered (Password Hashed): ${newUser.email} (ID: ${newUser.id})`);
 
+  // Create session token & set HttpOnly cookie
+  const sessionToken = createSessionToken(newUser);
+  res.cookie('auth_token', sessionToken, {
+    httpOnly: true,
+    sameSite: 'lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+  });
+
   res.status(201).json({
     success: true,
     message: 'Account created successfully! Welcome to Go Orbit.',
+    token: sessionToken,
     user: sanitizeUser(newUser)
   });
 };
 
 app.post('/api/auth/signup', handleDirectSignUp);
 app.post('/api/auth/register', handleDirectSignUp);
-app.post('/api/auth/register-init', handleDirectSignUp); // backward-compatible alias
-app.post('/api/auth/register-verify', handleDirectSignUp); // backward-compatible alias
+app.post('/api/auth/register-init', handleDirectSignUp);
+app.post('/api/auth/register-verify', handleDirectSignUp);
 
-// 9.2 Direct Sign In -> Authenticates with Email/Phone & Hashed Password
+// 9.2 Secure Sign In -> Authenticates with Email/Phone & Hashed Password with rate limiting
 app.post('/api/auth/login', (req, res) => {
   const { identifier, password } = req.body;
+  const clientIp = req.ip || req.connection.remoteAddress || 'unknown';
+  const rateLimitKey = `${clientIp}_${(identifier || '').toString().toLowerCase().trim()}`;
+
+  // Check rate limiter against brute-force attacks
+  const rateLimitStatus = checkRateLimit(rateLimitKey);
+  if (!rateLimitStatus.allowed) {
+    return res.status(429).json({
+      success: false,
+      code: 'TOO_MANY_REQUESTS',
+      error: rateLimitStatus.error
+    });
+  }
 
   if (!identifier || !password) {
     return res.status(400).json({ 
@@ -855,21 +901,18 @@ app.post('/api/auth/login', (req, res) => {
   const users = getData('users.json');
   const user = findUserByIdentifier(users, identifier);
 
-  if (!user) {
-    return res.status(404).json({ 
+  // Generic credential verification error defense to mitigate account enumeration
+  if (!user || !verifyPassword(password, user.password)) {
+    recordFailedAttempt(rateLimitKey);
+    return res.status(401).json({ 
       success: false, 
-      code: 'USER_NOT_FOUND',
-      error: 'No account found with this email or mobile number. Please check the spelling or sign up for a new account.' 
+      code: 'INVALID_CREDENTIALS',
+      error: 'Invalid email/mobile or password. Please verify your credentials and try again.' 
     });
   }
 
-  if (!verifyPassword(password, user.password)) {
-    return res.status(401).json({ 
-      success: false, 
-      code: 'INCORRECT_PASSWORD',
-      error: 'Incorrect password. The password you entered does not match our records.' 
-    });
-  }
+  // Clear failed attempts counter on success
+  clearFailedAttempts(rateLimitKey);
 
   // If user had a legacy plaintext password, upgrade to hash automatically
   if (!user.password.includes(':')) {
@@ -882,9 +925,18 @@ app.post('/api/auth/login', (req, res) => {
 
   console.log(`[Go Orbit Auth] User logged in: ${user.email}`);
 
+  // Create cryptographic session token & set HttpOnly cookie
+  const sessionToken = createSessionToken(user);
+  res.cookie('auth_token', sessionToken, {
+    httpOnly: true,
+    sameSite: 'lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+  });
+
   res.json({
     success: true,
     message: `Welcome back, ${user.name}!`,
+    token: sessionToken,
     user: sanitizeUser(user)
   });
 });
@@ -930,14 +982,15 @@ const handleDirectForgot = (req, res) => {
     });
   }
 
-  const cleanPass = newPassword.toString().trim();
-  if (cleanPass.length < 6) {
+  const passwordCheck = validatePassword(newPassword);
+  if (!passwordCheck.valid) {
     return res.status(400).json({ 
       success: false, 
-      error: 'New password must be at least 6 characters long.' 
+      error: passwordCheck.error 
     });
   }
 
+  const cleanPass = passwordCheck.password;
   const users = getData('users.json');
   const user = findUserByIdentifier(users, identifier);
 
@@ -956,9 +1009,18 @@ const handleDirectForgot = (req, res) => {
 
   console.log(`[Go Orbit Auth] Password successfully updated (Hashed) for: ${user.email}`);
 
+  // Create session token & set HttpOnly cookie
+  const sessionToken = createSessionToken(user);
+  res.cookie('auth_token', sessionToken, {
+    httpOnly: true,
+    sameSite: 'lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  });
+
   res.json({
     success: true,
     message: 'Your password has been updated successfully! Welcome back.',
+    token: sessionToken,
     user: sanitizeUser(user)
   });
 };
@@ -966,21 +1028,44 @@ const handleDirectForgot = (req, res) => {
 app.post('/api/auth/forgot-password', handleDirectForgot);
 app.post('/api/auth/forgot-verify', handleDirectForgot);
 
-// 9.7 Current User Profile check
+// 9.5 Session Invalidation / Logout
+app.post('/api/auth/logout', (req, res) => {
+  res.clearCookie('auth_token', {
+    httpOnly: true,
+    sameSite: 'lax'
+  });
+  res.json({
+    success: true,
+    message: 'Signed out successfully.'
+  });
+});
+
+// 9.6 Current User Profile check via HttpOnly cookie or bearer token
 app.get('/api/auth/me', (req, res) => {
+  const token = req.cookies.auth_token || (req.headers.authorization && req.headers.authorization.split(' ')[1]);
+
+  if (token) {
+    const session = verifySessionToken(token);
+    if (session && session.email) {
+      const users = getData('users.json');
+      const user = users.find(u => u.email.toLowerCase() === session.email.toLowerCase());
+      if (user) {
+        return res.json({ success: true, user: sanitizeUser(user) });
+      }
+    }
+  }
+
+  // Fallback to explicit query / header
   const email = (req.query.email || req.headers['x-user-email'] || '').toLowerCase().trim();
-  if (!email) {
-    return res.status(400).json({ error: 'Email parameter required.' });
+  if (email) {
+    const users = getData('users.json');
+    const user = users.find(u => u.email.toLowerCase() === email);
+    if (user) {
+      return res.json({ success: true, user: sanitizeUser(user) });
+    }
   }
 
-  const users = getData('users.json');
-  const user = users.find(u => u.email.toLowerCase() === email);
-
-  if (!user) {
-    return res.status(404).json({ error: 'User not found.' });
-  }
-
-  res.json({ success: true, user: sanitizeUser(user) });
+  res.status(401).json({ success: false, error: 'Unauthorized: No active session.' });
 });
 
 // Serve frontend production build if available

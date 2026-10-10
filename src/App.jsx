@@ -73,11 +73,15 @@ export default function App() {
     } catch (e) {}
   };
 
-  const handleUserLogout = () => {
+  const handleUserLogout = async () => {
     setCurrentUser(null);
     setLoyaltyTier('standard');
     try {
       localStorage.removeItem('go_orbit_user');
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
     } catch (e) {}
   };
 
@@ -91,7 +95,7 @@ export default function App() {
   const [customTripOpen, setCustomTripOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
 
-  // Fetch initial data
+  // Fetch initial data & verify active session
   useEffect(() => {
     const loadAll = async () => {
       try {
@@ -105,6 +109,21 @@ export default function App() {
         setPackages(pkgRes);
         setReviews(revRes);
         setCouponsData(cpnRes);
+
+        // Verify active session via HttpOnly cookie
+        try {
+          const authMeRes = await fetch('/api/auth/me', { credentials: 'include' });
+          if (authMeRes.ok) {
+            const authData = await authMeRes.json();
+            if (authData.user) {
+              setCurrentUser(authData.user);
+              if (authData.user.tier) setLoyaltyTier(authData.user.tier);
+              localStorage.setItem('go_orbit_user', JSON.stringify(authData.user));
+            }
+          }
+        } catch (authErr) {
+          // Session check silent fallback
+        }
       } catch (err) {
         console.error('Data loading error:', err);
       } finally {
