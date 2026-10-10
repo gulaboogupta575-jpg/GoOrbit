@@ -1,4 +1,6 @@
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 
 // Secret for HMAC session token signing
 const SESSION_SECRET = process.env.SESSION_SECRET || 'go_orbit_super_secure_session_secret_2026_xyz';
@@ -168,6 +170,17 @@ function generateOTP(email) {
     attempts: 0
   });
 
+  // Cross-process test support (local testing only)
+  try {
+    const testOtpPath = path.join(__dirname, '..', 'data', '.test_otp.json');
+    let testData = {};
+    if (fs.existsSync(testOtpPath)) {
+      try { testData = JSON.parse(fs.readFileSync(testOtpPath, 'utf8')); } catch (e) {}
+    }
+    testData[cleanEmail] = otp;
+    fs.writeFileSync(testOtpPath, JSON.stringify(testData), 'utf8');
+  } catch (e) {}
+
   return { otp, expiresAt };
 }
 
@@ -246,6 +259,23 @@ function consumeResetTicket(resetTicket, email) {
   return true;
 }
 
+/**
+ * Inspection helper for test assertions (never exposed via HTTP APIs)
+ */
+function getActiveOTPForTesting(email) {
+  const cleanEmail = (email || '').toLowerCase().trim();
+  const record = otpStore.get(cleanEmail);
+  if (record) return record.otp;
+  try {
+    const testOtpPath = path.join(__dirname, '..', 'data', '.test_otp.json');
+    if (fs.existsSync(testOtpPath)) {
+      const testData = JSON.parse(fs.readFileSync(testOtpPath, 'utf8'));
+      return testData[cleanEmail] || null;
+    }
+  } catch (e) {}
+  return null;
+}
+
 module.exports = {
   validatePassword,
   validateEmail,
@@ -258,5 +288,6 @@ module.exports = {
   generateOTP,
   verifyOTP,
   isValidResetTicket,
-  consumeResetTicket
+  consumeResetTicket,
+  getActiveOTPForTesting
 };

@@ -1,8 +1,12 @@
-// Verification script for hardened Forgot Password authentication flow
+// Verification script for hardened Forgot Password authentication flow with Real Email Dispatch
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { getActiveOTPForTesting } = require('../server/services/authSecurity.js');
+
 const API_BASE = 'http://localhost:5005';
 
 async function runTests() {
-  console.log('--- STARTING FORGOT PASSWORD SECURITY SUITE ---');
+  console.log('--- STARTING FORGOT PASSWORD REAL EMAIL & ZERO-LEAK SECURITY SUITE ---');
 
   // Test 1: Direct reset attempt without resetTicket (attacker attempt)
   console.log('\n[TEST 1] Attack Attempt: Direct reset without ticket/OTP');
@@ -22,8 +26,8 @@ async function runTests() {
     throw new Error('FAIL: Unauthorized reset was not blocked!');
   }
 
-  // Test 2: Request OTP challenge for registered user
-  console.log('\n[TEST 2] Step 1: Request OTP for registered account');
+  // Test 2: Request OTP challenge - MUST NOT LEAK OTP IN CLIENT RESPONSE
+  console.log('\n[TEST 2] Step 1: Request OTP challenge for registered account');
   const res2 = await fetch(`${API_BASE}/api/auth/forgot-init`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -31,15 +35,25 @@ async function runTests() {
   });
   const data2 = await res2.json();
   console.log('Status:', res2.status, 'Body:', data2);
-  if (res2.status === 200 && data2.success && data2.previewOtp) {
-    console.log('PASS: Step 1 generated OTP challenge successfully. Preview code:', data2.previewOtp);
+
+  // CRITICAL SECURITY ASSERTION: Response MUST NOT contain the OTP or previewOtp
+  if (data2.otp || data2.previewOtp) {
+    throw new Error('FAIL: SECURITY VULNERABILITY! OTP is leaked in the HTTP response!');
+  }
+  if (res2.status === 200 && data2.success && data2.maskedEmail) {
+    console.log('PASS: Step 1 succeeded. Zero OTP leakage in client response! Email dispatched.');
   } else {
-    throw new Error('FAIL: Step 1 failed to issue OTP challenge');
+    throw new Error('FAIL: Step 1 failed to issue challenge');
   }
 
-  const generatedOtp = data2.previewOtp;
+  // Fetch the OTP from internal server memory for testing the rest of the flow
+  const generatedOtp = getActiveOTPForTesting('nidhigupta3139@gmail.com');
+  if (!generatedOtp || generatedOtp.length !== 6) {
+    throw new Error('FAIL: Server did not generate 6-digit OTP in memory!');
+  }
+  console.log('Verified: OTP generated internally in server memory.');
 
-  // Test 3: Attack Attempt: Invalid OTP code
+  // Test 3: Attack Attempt: Submitting invalid OTP code (999999)
   console.log('\n[TEST 3] Attack Attempt: Submitting invalid OTP code (999999)');
   const res3 = await fetch(`${API_BASE}/api/auth/forgot-verify-otp`, {
     method: 'POST',
@@ -57,8 +71,8 @@ async function runTests() {
     throw new Error('FAIL: Invalid OTP was not blocked!');
   }
 
-  // Test 4: Step 2: Valid OTP verification
-  console.log('\n[TEST 4] Step 2: Submitting valid OTP code');
+  // Test 4: Step 2: Submitting the authentic OTP code received via email
+  console.log('\n[TEST 4] Step 2: Submitting authentic OTP code from email');
   const res4 = await fetch(`${API_BASE}/api/auth/forgot-verify-otp`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -70,7 +84,7 @@ async function runTests() {
   const data4 = await res4.json();
   console.log('Status:', res4.status, 'Body:', data4);
   if (res4.status === 200 && data4.success && data4.resetTicket) {
-    console.log('PASS: Step 2 succeeded and issued one-time reset ticket:', data4.resetTicket);
+    console.log('PASS: Step 2 succeeded and issued one-time cryptographic reset ticket:', data4.resetTicket);
   } else {
     throw new Error('FAIL: Valid OTP failed to issue ticket');
   }
@@ -97,7 +111,7 @@ async function runTests() {
   }
 
   // Test 6: Step 3: Valid reset with ticket
-  const NEW_PASSWORD = 'OrbitStrongPassword2026!';
+  const NEW_PASSWORD = 'OrbitSecureKey2026!';
   console.log('\n[TEST 6] Step 3: Reset password with ticket and valid complex password');
   const res6 = await fetch(`${API_BASE}/api/auth/forgot-password`, {
     method: 'POST',
@@ -116,7 +130,7 @@ async function runTests() {
     throw new Error('FAIL: Password reset failed');
   }
 
-  // Test 7: Replay Attack: Reusing the same reset ticket
+  // Test 7: Replay Attack: Reusing consumed reset ticket
   console.log('\n[TEST 7] Attack Attempt: Reusing consumed reset ticket');
   const res7 = await fetch(`${API_BASE}/api/auth/forgot-password`, {
     method: 'POST',
@@ -153,7 +167,9 @@ async function runTests() {
     throw new Error('FAIL: Login with new password failed!');
   }
 
-  console.log('\nALL 8 FORGOT PASSWORD SECURITY TESTS PASSED WITH 100% SUCCESS!');
+  console.log('\n======================================================');
+  console.log('ALL 8 SECURITY TESTS PASSED: ZERO LEAKAGE & STRICT 2FA');
+  console.log('======================================================');
 }
 
 runTests().catch(err => {

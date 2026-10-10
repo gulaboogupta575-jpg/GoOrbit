@@ -50,7 +50,6 @@ export default function AuthModal({
   const [forgotAccountInfo, setForgotAccountInfo] = useState(null);
   const [forgotOtp, setForgotOtp] = useState('');
   const [forgotResetTicket, setForgotResetTicket] = useState('');
-  const [previewCode, setPreviewCode] = useState('');
   const [forgotPassword, setForgotPassword] = useState('');
   const [forgotConfirmPassword, setForgotConfirmPassword] = useState('');
   const [forgotShowPassword, setForgotShowPassword] = useState(false);
@@ -86,7 +85,6 @@ export default function AuthModal({
       setForgotStep(1);
       setForgotOtp('');
       setForgotResetTicket('');
-      setPreviewCode('');
       setForgotPassword('');
       setForgotConfirmPassword('');
       if (loginIdentifier && !forgotIdentifier) {
@@ -274,11 +272,8 @@ export default function AuthModal({
         email: data.userEmail,
         maskedEmail: data.maskedEmail || data.userEmail
       });
-      if (data.previewOtp) {
-        setPreviewCode(data.previewOtp);
-      }
       setForgotStep(2);
-      setSuccessMsg(`A 6-digit verification code was sent to ${data.maskedEmail || data.userEmail}. Please enter it below to verify your identity.`);
+      setSuccessMsg(`A 6-digit security verification code has been dispatched to ${data.maskedEmail || data.userEmail}. Please check your inbox.`);
     } catch (err) {
       setErrorMsg('Network error. Unable to send verification code.');
     } finally {
@@ -960,25 +955,19 @@ export default function AuthModal({
                     </div>
                   )}
 
-                  {/* Dev / Preview OTP Banner */}
-                  {previewCode && (
-                    <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 text-[11px] flex items-center justify-between shadow-xs">
-                      <div className="flex items-center space-x-2">
-                        <KeyRound className="w-4 h-4 text-amber-700 shrink-0" />
-                        <div>
-                          <span className="font-medium text-amber-800">Security Test OTP: </span>
-                          <span className="font-mono font-black text-xs text-amber-950 tracking-widest">{previewCode}</span>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setForgotOtp(previewCode)}
-                        className="text-[10px] font-extrabold text-amber-800 hover:text-amber-950 underline cursor-pointer"
-                      >
-                        Auto-fill
-                      </button>
+                  {/* Real Email Inbox Guidance Card */}
+                  <div className="p-3 rounded-xl bg-blue-50/80 border border-blue-200 text-[11px] text-blue-900 space-y-1 shadow-xs">
+                    <div className="flex items-center space-x-1.5 font-bold text-blue-950">
+                      <Mail className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                      <span>Security Verification Sent to Email</span>
                     </div>
-                  )}
+                    <p className="text-blue-800 leading-relaxed font-medium">
+                      A one-time 6-digit code has been delivered to <strong>{forgotAccountInfo?.maskedEmail || 'your email'}</strong>. Please open your email inbox, copy the code, and enter it below.
+                    </p>
+                    <p className="text-[10px] text-blue-600 font-semibold pt-0.5">
+                      Tip: If you don't see it immediately, please check your Spam or Promotions folder.
+                    </p>
+                  </div>
 
                   <div>
                     <label className="block font-bold text-slate-700 mb-1">

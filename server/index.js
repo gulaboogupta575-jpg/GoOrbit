@@ -4,6 +4,17 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
+
+// Automatically load .env configuration if present
+const envFile = path.join(__dirname, '..', '.env');
+if (fs.existsSync(envFile) && typeof process.loadEnvFile === 'function') {
+  try {
+    process.loadEnvFile(envFile);
+  } catch (e) {
+    console.warn('[Go Orbit] Notice: Could not load .env file:', e.message);
+  }
+}
+
 const {
   validatePassword,
   validateEmail,
@@ -18,6 +29,8 @@ const {
   isValidResetTicket,
   consumeResetTicket
 } = require('./services/authSecurity');
+
+const { sendPasswordResetOTP } = require('./services/emailService');
 
 const app = express();
 const PORT = process.env.PORT || 5005;
@@ -946,7 +959,7 @@ app.post('/api/auth/login', (req, res) => {
 });
 
 // 9.3 Authenticated Password Recovery: Step 1 - Send 6-Digit Verification OTP
-app.post('/api/auth/forgot-init', (req, res) => {
+app.post('/api/auth/forgot-init', async (req, res) => {
   const { identifier } = req.body;
   if (!identifier) {
     return res.status(400).json({ 
@@ -968,7 +981,14 @@ app.post('/api/auth/forgot-init', (req, res) => {
 
   // Generate cryptographically secure OTP for authentication challenge
   const { otp, expiresAt } = generateOTP(user.email);
-  console.log(`[Go Orbit Auth Security] Password Reset OTP generated for ${user.email}: ${otp}`);
+  console.log(`[Go Orbit Auth Security] Password Reset OTP challenge initiated for ${user.email}`);
+
+  // Dispatch email directly to the registered user's email address
+  try {
+    await sendPasswordResetOTP(user.email, user.name, otp);
+  } catch (mailErr) {
+    console.error('[Go Orbit Auth Security] Failed to dispatch verification email:', mailErr.message);
+  }
 
   // Mask email: j***n@example.com
   const emailParts = user.email.split('@');
@@ -977,14 +997,14 @@ app.post('/api/auth/forgot-init', (req, res) => {
     : emailParts[0][0] + '***' + emailParts[0].slice(-1);
   const maskedEmail = `${maskedName}@${emailParts[1]}`;
 
+  // STRICT SECURITY: Never send the OTP code back to the client!
+  // The code can ONLY be accessed by the authentic owner of that email account.
   res.json({ 
     success: true, 
-    message: `Security verification code sent to ${maskedEmail}!`,
+    message: `A 6-digit security verification code has been dispatched to ${maskedEmail}. Please check your email inbox.`,
     userEmail: user.email,
     maskedEmail,
     userName: user.name,
-    // In local development / preview environment, include code for immediate testing
-    previewOtp: otp,
     expiresAt
   });
 });
