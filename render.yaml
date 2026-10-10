@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: go-orbit
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM
+        value: Go Orbit Security <onboarding@resend.dev>
