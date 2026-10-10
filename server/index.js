@@ -1154,17 +1154,23 @@ app.get('/api/auth/me', (req, res) => {
   res.status(401).json({ success: false, error: 'Unauthorized: No active session.' });
 });
 
-// Serve frontend production build if available
+// Serve frontend production build (SPA)
 const distPath = path.join(__dirname, '..', 'dist');
+console.log(`[Go Orbit] Frontend assets directory: ${distPath} (Exists: ${fs.existsSync(distPath)})`);
+
 if (fs.existsSync(distPath)) {
   app.use(express.static(distPath));
-  app.use((req, res, next) => {
-    if (req.method === 'GET' && !req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
-      return res.sendFile(path.join(distPath, 'index.html'));
-    }
-    next();
-  });
 }
+
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
+    const indexPath = path.join(distPath, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      return res.sendFile(indexPath);
+    }
+  }
+  next();
+});
 
 app.listen(PORT, () => {
   console.log(`[Go Orbit] Server running smoothly on http://localhost:${PORT}`);
