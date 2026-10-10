@@ -1,7 +1,7 @@
 /**
  * Go Orbit Email Service
  * Handles transactional emails, security verification OTPs, and notifications
- * Uses Nodemailer with SMTP / Gmail App Password support
+ * Supports Resend REST API (primary) with automatic SMTP/Nodemailer fallback
  */
 
 const nodemailer = require('nodemailer');
@@ -9,7 +9,50 @@ const nodemailer = require('nodemailer');
 let cachedTransporter = null;
 
 /**
- * Creates or retrieves the configured mail transporter
+ * Sends transactional email via the Resend REST API
+ */
+async function sendViaResend({ toEmail, recipientName, otp }) {
+  const apiKey = (process.env.RESEND_API_KEY || '').trim();
+  if (!apiKey) return null;
+
+  const from = process.env.RESEND_FROM || 'Go Orbit Security <onboarding@resend.dev>';
+  const html = generateOTPEmailHtml({ recipientName, otp });
+  const text = `Hello ${recipientName || 'Traveler'},\n\nYour Go Orbit password reset verification code is: ${otp}\n\nThis code is valid for 10 minutes.\n\nGo Orbit Security Team`;
+
+  console.log(`[Go Orbit Email] Dispatching verification code to ${toEmail} via Resend API...`);
+
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from,
+        to: [toEmail],
+        subject: `Your Go Orbit Verification Code: ${otp}`,
+        text,
+        html
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      console.warn(`[Go Orbit Email] Resend API notice (${response.status}):`, data.message || data);
+      return { success: false, error: data.message };
+    }
+
+    console.log(`[Go Orbit Email] Email successfully delivered to inbox via Resend! ID: ${data.id}`);
+    return { success: true, messageId: data.id, provider: 'resend' };
+  } catch (err) {
+    console.error('[Go Orbit Email] Network error connecting to Resend:', err.message);
+    return { success: false, error: err.message };
+  }
+}
+
+/**
+ * Creates or retrieves the configured SMTP mail transporter (Fallback)
  */
 async function getTransporter() {
   if (cachedTransporter) return cachedTransporter;
@@ -42,10 +85,7 @@ async function getTransporter() {
     return cachedTransporter;
   }
 
-  // 2. Fallback in development when no SMTP is configured in .env yet
-  console.warn('[Go Orbit Email] Notice: SMTP credentials (SMTP_USER & SMTP_PASS) not set in .env.');
-  console.warn('[Go Orbit Email] Attempting Ethereal test mail transport for safe offline testing...');
-
+  // 2. Safe development fallback if no SMTP or Resend credentials
   try {
     const testAccount = await nodemailer.createTestAccount();
     cachedTransporter = nodemailer.createTransport({
@@ -57,10 +97,8 @@ async function getTransporter() {
         pass: testAccount.pass
       }
     });
-    console.log('[Go Orbit Email] Ethereal test inbox connected successfully.');
     return cachedTransporter;
   } catch (err) {
-    console.warn('[Go Orbit Email] Could not connect to Ethereal. Using mock stream transporter.');
     cachedTransporter = nodemailer.createTransport({
       streamTransport: true,
       newline: 'windows'
@@ -159,9 +197,18 @@ function generateOTPEmailHtml({ recipientName, otp }) {
  * @param {string} toEmail - Target user email address
  * @param {string} recipientName - User's display name
  * @param {string} otp - 6-digit cryptographic verification code
- * @returns {Promise<{success: boolean, messageId?: string, previewUrl?: string, error?: string}>}
+ * @returns {Promise<{success: boolean, messageId?: string, provider: string, error?: string}>}
  */
 async function sendPasswordResetOTP(toEmail, recipientName, otp) {
+  // 1. Try Resend API (High performance & modern delivery)
+  if (process.env.RESEND_API_KEY) {
+    const resendResult = await sendViaResend({ toEmail, recipientName, otp });
+    if (resendResult && resendResult.success) {
+      return resendResult;
+    }
+  }
+
+  // 2. Fallback to Nodemailer SMTP
   try {
     const transporter = await getTransporter();
     const fromAddress = process.env.EMAIL_FROM || (process.env.SMTP_USER ? `"Go Orbit Security" <${process.env.SMTP_USER}>` : '"Go Orbit Security" <security@goorbit.com>');
@@ -175,7 +222,7 @@ async function sendPasswordResetOTP(toEmail, recipientName, otp) {
     };
 
     const info = await transporter.sendMail(mailOptions);
-    console.log(`[Go Orbit Email] Dispatched security verification email to ${toEmail} (Message ID: ${info.messageId})`);
+    console.log(`[Go Orbit Email] Dispatched security verification email to ${toEmail} via SMTP (Message ID: ${info.messageId})`);
 
     const previewUrl = nodemailer.getTestMessageUrl(info);
     if (previewUrl) {
@@ -185,7 +232,7 @@ async function sendPasswordResetOTP(toEmail, recipientName, otp) {
     return {
       success: true,
       messageId: info.messageId,
-      previewUrl
+      provider: 'smtp'
     };
   } catch (error) {
     console.error(`[Go Orbit Email] Error sending verification email to ${toEmail}:`, error.message);
