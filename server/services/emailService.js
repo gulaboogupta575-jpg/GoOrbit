@@ -200,7 +200,37 @@ function generateOTPEmailHtml({ recipientName, otp }) {
  * @returns {Promise<{success: boolean, messageId?: string, provider: string, error?: string}>}
  */
 async function sendPasswordResetOTP(toEmail, recipientName, otp) {
-  // 1. Try Resend API (High performance & modern delivery)
+  const smtpUser = process.env.SMTP_USER || process.env.EMAIL_USER;
+  const smtpPass = process.env.SMTP_PASS || process.env.EMAIL_PASS;
+
+  // 1. If Gmail SMTP is configured, use it directly (delivers to ANY email in the world with zero 403 errors)
+  if (smtpUser && smtpPass) {
+    try {
+      const transporter = await getTransporter();
+      const fromAddress = process.env.EMAIL_FROM || `"Go Orbit Security" <${smtpUser}>`;
+
+      const mailOptions = {
+        from: fromAddress,
+        to: toEmail,
+        subject: `Your Go Orbit Verification Code: ${otp}`,
+        text: `Hello ${recipientName || 'Traveler'},\n\nYour Go Orbit password reset verification code is: ${otp}\n\nThis code expires in 10 minutes.\n\nIf you did not request this code, you can safely ignore this email.\n\nGo Orbit Security Team`,
+        html: generateOTPEmailHtml({ recipientName, otp })
+      };
+
+      const info = await transporter.sendMail(mailOptions);
+      console.log(`[Go Orbit Email] Dispatched security verification email to ${toEmail} via Gmail SMTP (Message ID: ${info.messageId})`);
+
+      return {
+        success: true,
+        messageId: info.messageId,
+        provider: 'smtp'
+      };
+    } catch (error) {
+      console.error(`[Go Orbit Email] Error sending via Gmail SMTP to ${toEmail}:`, error.message);
+    }
+  }
+
+  // 2. Try Resend API
   if (process.env.RESEND_API_KEY) {
     const resendResult = await sendViaResend({ toEmail, recipientName, otp });
     if (resendResult && resendResult.success) {
@@ -208,38 +238,26 @@ async function sendPasswordResetOTP(toEmail, recipientName, otp) {
     }
   }
 
-  // 2. Fallback to Nodemailer SMTP
+  // 3. Fallback (Development test account)
   try {
     const transporter = await getTransporter();
-    const fromAddress = process.env.EMAIL_FROM || (process.env.SMTP_USER ? `"Go Orbit Security" <${process.env.SMTP_USER}>` : '"Go Orbit Security" <security@goorbit.com>');
-
+    const fromAddress = process.env.EMAIL_FROM || '"Go Orbit Security" <security@goorbit.com>';
     const mailOptions = {
       from: fromAddress,
       to: toEmail,
       subject: `Your Go Orbit Verification Code: ${otp}`,
-      text: `Hello ${recipientName || 'Traveler'},\n\nYour Go Orbit password reset verification code is: ${otp}\n\nThis code expires in 10 minutes.\n\nIf you did not request this code, you can safely ignore this email.\n\nGo Orbit Security Team`,
+      text: `Hello ${recipientName || 'Traveler'},\n\nYour Go Orbit password reset verification code is: ${otp}\n\nThis code expires in 10 minutes.\n\nGo Orbit Security Team`,
       html: generateOTPEmailHtml({ recipientName, otp })
     };
-
     const info = await transporter.sendMail(mailOptions);
-    console.log(`[Go Orbit Email] Dispatched security verification email to ${toEmail} via SMTP (Message ID: ${info.messageId})`);
-
     const previewUrl = nodemailer.getTestMessageUrl(info);
     if (previewUrl) {
       console.log(`[Go Orbit Email] Development Ethereal Inbox Preview: ${previewUrl}`);
     }
-
-    return {
-      success: true,
-      messageId: info.messageId,
-      provider: 'smtp'
-    };
+    return { success: true, messageId: info.messageId, provider: 'ethereal' };
   } catch (error) {
     console.error(`[Go Orbit Email] Error sending verification email to ${toEmail}:`, error.message);
-    return {
-      success: false,
-      error: error.message
-    };
+    return { success: false, error: error.message };
   }
 }
 
