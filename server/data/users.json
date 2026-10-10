@@ -10,5 +10,65 @@
     "isVerified": true,
     "createdAt": "2026-10-08T07:29:00.000Z",
     "lastLogin": "2026-10-10T07:53:35.366Z"
+  },
+  {
+    "id": "usr-1791619026601",
+    "name": "Touhid Hashmi",
+    "email": "hassmitouhid22@gmail.com",
+    "phone": "8850160402",
+    "password": "fbc890c01ca85fc54ae38522e2066816:0a6da950ef18d8709d0483ea8ea64651e035770c9af53e5ada19c2b83fa4579cc0ad8a686c0b7606ac8ad2539332df84fd12cd91887e957b0c58c7524b972d48",
+    "tier": "regular",
+    "role": "user",
+    "isVerified": true,
+    "createdAt": "2026-10-10T07:57:06.938Z",
+    "lastLogin": "2026-10-10T07:57:06.938Z"
+  },
+  {
+    "id": "usr-1791619271009",
+    "name": "tipiki4989@aahzz.com",
+    "email": "tipiki4989@aahzz.com",
+    "phone": "555846821482",
+    "password": "17099b253e83f33f975c366c0a02bad4:43b674a794beffadc12384abff6ada827b2d57369ef67a201d013475f6d50255640e9368d32fd1b2d485659f913a1ce4707124b044961540d8c8f65190b43417",
+    "tier": "regular",
+    "role": "user",
+    "isVerified": true,
+    "createdAt": "2026-10-10T08:01:11.148Z",
+    "lastLogin": "2026-10-10T08:01:29.702Z"
+  },
+  {
+    "id": "usr-1791619415780",
+    "name": "fjuowomd",
+    "email": "hasmitouhid22@gmail.com",
+    "phone": "5548455725",
+    "password": "766323be43e5424a2df9ce45b389e323:78e98bcf7a216345c8207494a5e1bd89b72d1d9f49c282f9f029f9a80905a6b51f4f6d33448232ca37a490ad5a81b63a44dcf3d41916fe842cb306fb19170406",
+    "tier": "regular",
+    "role": "user",
+    "isVerified": true,
+    "createdAt": "2026-10-10T08:03:35.944Z",
+    "lastLogin": "2026-10-10T08:04:00.341Z"
+  },
+  {
+    "id": "usr-1791619987027",
+    "name": "monti",
+    "email": "shujuka123123@gmail.com",
+    "phone": "45856616914",
+    "password": "0129ba04ac4dbcd3de9515565276b885:2c5056ec610622a6ec9bef7115b492b1699a13bd3a7426195fef346b3e890fd7f7d293161a53934b9992db768fd01ff219f63fc35e3177222bf7642757762c2f",
+    "tier": "regular",
+    "role": "user",
+    "isVerified": true,
+    "createdAt": "2026-10-10T08:13:07.169Z",
+    "lastLogin": "2026-10-10T08:13:07.169Z"
+  },
+  {
+    "id": "usr-1791620142178",
+    "name": "mataji",
+    "email": "gulaboogupta575@gmail.com",
+    "phone": "488585518522",
+    "password": "80bb2ccea7b7c7569b6c2015c5c555b4:024d91a79b5821eda6daed3525c51717cb2ac14780dd85c5150aa37fe12f44f1d9ca3d2e4894aa84ff4b175b4bc70f4d688b7fbe924e321eaeae64e5277cf054",
+    "tier": "regular",
+    "role": "user",
+    "isVerified": true,
+    "createdAt": "2026-10-10T08:15:42.451Z",
+    "lastLogin": "2026-10-10T08:16:18.178Z"
   }
 ]
