@@ -144,6 +144,108 @@ function clearFailedAttempts(key) {
   failedAttemptsMap.delete(key);
 }
 
+/**
+ * In-memory storage for OTP verification challenges and reset tickets
+ */
+const otpStore = new Map();
+const resetTicketStore = new Map();
+
+const OTP_EXPIRY_MS = 10 * 60 * 1000; // 10 minutes
+const TICKET_EXPIRY_MS = 15 * 60 * 1000; // 15 minutes
+
+/**
+ * Generates a cryptographically random 6-digit OTP
+ */
+function generateOTP(email) {
+  const cleanEmail = email.toLowerCase().trim();
+  // Generate random 6-digit number
+  const otp = Math.floor(100000 + crypto.randomInt(900000)).toString();
+  const expiresAt = Date.now() + OTP_EXPIRY_MS;
+
+  otpStore.set(cleanEmail, {
+    otp,
+    expiresAt,
+    attempts: 0
+  });
+
+  return { otp, expiresAt };
+}
+
+/**
+ * Verifies the submitted OTP against stored challenge
+ */
+function verifyOTP(email, submittedOtp) {
+  const cleanEmail = email.toLowerCase().trim();
+  const record = otpStore.get(cleanEmail);
+
+  if (!record) {
+    return { valid: false, error: 'No verification code was requested or the code has expired. Please request a new code.' };
+  }
+
+  if (Date.now() > record.expiresAt) {
+    otpStore.delete(cleanEmail);
+    return { valid: false, error: 'Verification code has expired. Please request a new code.' };
+  }
+
+  record.attempts += 1;
+  if (record.attempts > 5) {
+    otpStore.delete(cleanEmail);
+    return { valid: false, error: 'Too many incorrect attempts. Please request a new verification code.' };
+  }
+
+  if (record.otp !== submittedOtp.toString().trim()) {
+    return { valid: false, error: 'Incorrect verification code. Please check and try again.' };
+  }
+
+  // OTP verified! Invalidate OTP to prevent replay
+  otpStore.delete(cleanEmail);
+
+  // Issue a one-time cryptographic reset ticket
+  const resetTicket = crypto.randomBytes(32).toString('hex');
+  resetTicketStore.set(resetTicket, {
+    email: cleanEmail,
+    expiresAt: Date.now() + TICKET_EXPIRY_MS
+  });
+
+  return { valid: true, resetTicket };
+}
+
+/**
+ * Checks whether a reset ticket is valid without consuming it yet
+ */
+function isValidResetTicket(resetTicket, email) {
+  if (!resetTicket || typeof resetTicket !== 'string') return false;
+  const cleanEmail = (email || '').toLowerCase().trim();
+  const record = resetTicketStore.get(resetTicket);
+
+  if (!record) return false;
+  if (Date.now() > record.expiresAt) {
+    resetTicketStore.delete(resetTicket);
+    return false;
+  }
+  return record.email === cleanEmail;
+}
+
+/**
+ * Validates and consumes the one-time reset ticket
+ */
+function consumeResetTicket(resetTicket, email) {
+  if (!resetTicket || typeof resetTicket !== 'string') return false;
+  const cleanEmail = (email || '').toLowerCase().trim();
+  const record = resetTicketStore.get(resetTicket);
+
+  if (!record) return false;
+  if (Date.now() > record.expiresAt) {
+    resetTicketStore.delete(resetTicket);
+    return false;
+  }
+  if (record.email !== cleanEmail) return false;
+
+  // Consume ticket immediately (one-time use)
+  resetTicketStore.delete(resetTicket);
+  return true;
+}
+
 module.exports = {
   validatePassword,
   validateEmail,
@@ -152,5 +254,9 @@ module.exports = {
   parseCookies,
   checkRateLimit,
   recordFailedAttempt,
-  clearFailedAttempts
+  clearFailedAttempts,
+  generateOTP,
+  verifyOTP,
+  isValidResetTicket,
+  consumeResetTicket
 };

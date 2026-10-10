@@ -44,10 +44,13 @@ export default function AuthModal({
   const [signupConfirmPassword, setSignupConfirmPassword] = useState('');
   const [signupShowPassword, setSignupShowPassword] = useState(false);
 
-  // --- Forgot Password States (2-Step Flow) ---
-  const [forgotStep, setForgotStep] = useState(1); // 1: Find Account, 2: Set New Password
+  // --- Forgot Password States (3-Step Identity Verification Flow) ---
+  const [forgotStep, setForgotStep] = useState(1); // 1: Send OTP, 2: Verify OTP, 3: Set New Password
   const [forgotIdentifier, setForgotIdentifier] = useState('');
   const [forgotAccountInfo, setForgotAccountInfo] = useState(null);
+  const [forgotOtp, setForgotOtp] = useState('');
+  const [forgotResetTicket, setForgotResetTicket] = useState('');
+  const [previewCode, setPreviewCode] = useState('');
   const [forgotPassword, setForgotPassword] = useState('');
   const [forgotConfirmPassword, setForgotConfirmPassword] = useState('');
   const [forgotShowPassword, setForgotShowPassword] = useState(false);
@@ -81,6 +84,9 @@ export default function AuthModal({
     setMode(newMode);
     if (newMode === 'forgot') {
       setForgotStep(1);
+      setForgotOtp('');
+      setForgotResetTicket('');
+      setPreviewCode('');
       setForgotPassword('');
       setForgotConfirmPassword('');
       if (loginIdentifier && !forgotIdentifier) {
@@ -231,7 +237,8 @@ export default function AuthModal({
   };
 
   // ==============================================================
-  // 3. FORGOT PASSWORD - STEP 1: VERIFY ACCOUNT
+  // ==============================================================
+  // 3. FORGOT PASSWORD - STEP 1: REQUEST VERIFICATION CODE
   // ==============================================================
   const handleVerifyAccount = async (e) => {
     e.preventDefault();
@@ -261,23 +268,71 @@ export default function AuthModal({
         return;
       }
 
-      // Account verified! Move to step 2
+      // Verification code dispatched! Advance to Step 2
       setForgotAccountInfo({
         name: data.userName,
         email: data.userEmail,
-        phone: data.userPhone
+        maskedEmail: data.maskedEmail || data.userEmail
       });
+      if (data.previewOtp) {
+        setPreviewCode(data.previewOtp);
+      }
       setForgotStep(2);
-      setSuccessMsg(`Account found for ${data.userName}! Enter your new password below.`);
+      setSuccessMsg(`A 6-digit verification code was sent to ${data.maskedEmail || data.userEmail}. Please enter it below to verify your identity.`);
     } catch (err) {
-      setErrorMsg('Network error. Unable to verify account.');
+      setErrorMsg('Network error. Unable to send verification code.');
     } finally {
       setLoading(false);
     }
   };
 
   // ==============================================================
-  // 4. FORGOT PASSWORD - STEP 2: SET NEW PASSWORD
+  // 4. FORGOT PASSWORD - STEP 2: VERIFY SUBMITTED OTP
+  // ==============================================================
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    setErrorMsg('');
+    setErrorCode('');
+    setSuccessMsg('');
+
+    const code = forgotOtp.trim();
+    if (!code || code.length !== 6) {
+      setErrorMsg('Please enter the full 6-digit verification code.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch('/api/auth/forgot-verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: forgotAccountInfo?.email || forgotIdentifier,
+          otp: code
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        setErrorCode(data.code || '');
+        setErrorMsg(data.error || 'Incorrect or expired verification code.');
+        setLoading(false);
+        return;
+      }
+
+      // OTP confirmed! Store one-time reset ticket & advance to Step 3
+      setForgotResetTicket(data.resetTicket);
+      setForgotStep(3);
+      setSuccessMsg('Identity verified successfully! Please enter your new password.');
+    } catch (err) {
+      setErrorMsg('Network error. Unable to verify code.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ==============================================================
+  // 5. FORGOT PASSWORD - STEP 3: SET NEW PASSWORD WITH RESET TICKET
   // ==============================================================
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -285,7 +340,6 @@ export default function AuthModal({
     setErrorCode('');
     setSuccessMsg('');
 
-    const identifier = forgotIdentifier.trim();
     const pass = forgotPassword.trim();
     const confirm = forgotConfirmPassword.trim();
 
@@ -314,6 +368,12 @@ export default function AuthModal({
       return;
     }
 
+    if (!forgotResetTicket) {
+      setErrorMsg('Security Verification Required: Please verify your identity first.');
+      setForgotStep(1);
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await fetch('/api/auth/forgot-password', {
@@ -321,8 +381,9 @@ export default function AuthModal({
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
-          identifier,
-          newPassword: pass
+          email: forgotAccountInfo?.email || forgotIdentifier,
+          newPassword: pass,
+          resetTicket: forgotResetTicket
         })
       });
 
@@ -341,7 +402,7 @@ export default function AuthModal({
           setLoyaltyTier(data.user.tier);
         }
       }
-      setSuccessMsg('Password updated successfully! Welcome back.');
+      setSuccessMsg('Password updated securely! Identity verified.');
       setTimeout(() => {
         onClose();
       }, 900);
@@ -370,7 +431,11 @@ export default function AuthModal({
           {mode === 'forgot' && (
             <button
               onClick={() => {
-                if (forgotStep === 2) {
+                if (forgotStep === 3) {
+                  setForgotStep(2);
+                  setErrorMsg('');
+                  setSuccessMsg('');
+                } else if (forgotStep === 2) {
                   setForgotStep(1);
                   setErrorMsg('');
                   setSuccessMsg('');
@@ -381,7 +446,13 @@ export default function AuthModal({
               className="flex items-center space-x-1 text-xs text-blue-200 hover:text-white mb-2 transition-colors cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
-              <span>{forgotStep === 2 ? 'Back to Account Lookup' : 'Back to Sign In'}</span>
+              <span>
+                {forgotStep === 3 
+                  ? 'Back to Code Verification' 
+                  : forgotStep === 2 
+                  ? 'Back to Account Lookup' 
+                  : 'Back to Sign In'}
+              </span>
             </button>
           )}
 
@@ -399,16 +470,26 @@ export default function AuthModal({
             {mode === 'profile' && 'Your Travel Passport'}
             {mode === 'signin' && 'Sign In to Go Orbit'}
             {mode === 'signup' && 'Create Your Account'}
-            {mode === 'forgot' && (forgotStep === 1 ? 'Find Your Account' : 'Set New Password')}
+            {mode === 'forgot' && (
+              forgotStep === 1 
+                ? 'Find Your Account' 
+                : forgotStep === 2
+                ? 'Verify Security Code'
+                : 'Set New Password'
+            )}
           </h3>
 
           <p className="text-xs text-blue-100 mt-1">
             {mode === 'profile' && 'Manage your member tier & exclusive discounts'}
             {mode === 'signin' && 'Enter your registered credentials to access your account'}
             {mode === 'signup' && 'Join Go Orbit for instant 5% explorer member discount'}
-            {mode === 'forgot' && (forgotStep === 1 
-              ? 'Enter your registered email or mobile to verify your account' 
-              : 'Choose a strong new password to regain access')}
+            {mode === 'forgot' && (
+              forgotStep === 1 
+                ? 'Enter your registered email or mobile to receive a verification code' 
+                : forgotStep === 2
+                ? 'Enter the 6-digit verification code to confirm ownership'
+                : 'Choose a strong new password to regain access'
+            )}
           </p>
         </div>
 
@@ -845,32 +926,131 @@ export default function AuthModal({
                 </form>
               )}
 
-              {/* Step 2: Set New Password */}
+              {/* Step 2: Enter & Verify 6-digit Security OTP */}
               {forgotStep === 2 && (
-                <form onSubmit={handleResetPassword} className="space-y-3">
-                  {/* Verified Account Badge */}
+                <form onSubmit={handleVerifyOtp} className="space-y-3.5">
+                  {/* Account Identity Context */}
                   {forgotAccountInfo && (
-                    <div className="p-3 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-between">
+                    <div className="p-3 rounded-xl bg-blue-50/80 border border-blue-200 flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                        <div className="w-8 h-8 rounded-full bg-blue-600 text-white font-black text-xs flex items-center justify-center">
+                          {forgotAccountInfo.name ? forgotAccountInfo.name[0].toUpperCase() : 'U'}
+                        </div>
                         <div>
                           <div className="font-extrabold text-blue-950 text-xs">
                             {forgotAccountInfo.name}
                           </div>
-                          <div className="text-[11px] text-blue-700">
-                            {forgotAccountInfo.email}
+                          <div className="text-[11px] text-blue-700 font-medium">
+                            Code sent to: <span className="font-semibold">{forgotAccountInfo.maskedEmail || forgotAccountInfo.email}</span>
                           </div>
                         </div>
                       </div>
                       <button
                         type="button"
-                        onClick={() => setForgotStep(1)}
+                        onClick={() => {
+                          setForgotStep(1);
+                          setForgotOtp('');
+                          setErrorMsg('');
+                          setSuccessMsg('');
+                        }}
                         className="text-[11px] text-blue-600 hover:underline font-bold"
                       >
                         Change
                       </button>
                     </div>
                   )}
+
+                  {/* Dev / Preview OTP Banner */}
+                  {previewCode && (
+                    <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 text-[11px] flex items-center justify-between shadow-xs">
+                      <div className="flex items-center space-x-2">
+                        <KeyRound className="w-4 h-4 text-amber-700 shrink-0" />
+                        <div>
+                          <span className="font-medium text-amber-800">Security Test OTP: </span>
+                          <span className="font-mono font-black text-xs text-amber-950 tracking-widest">{previewCode}</span>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setForgotOtp(previewCode)}
+                        className="text-[10px] font-extrabold text-amber-800 hover:text-amber-950 underline cursor-pointer"
+                      >
+                        Auto-fill
+                      </button>
+                    </div>
+                  )}
+
+                  <div>
+                    <label className="block font-bold text-slate-700 mb-1">
+                      Enter 6-Digit Verification Code
+                    </label>
+                    <div className="flex items-center space-x-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus-within:border-blue-500 focus-within:bg-white transition-all">
+                      <ShieldCheck className="w-4 h-4 text-slate-400 shrink-0" />
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        maxLength={6}
+                        required
+                        placeholder="• • • • • •"
+                        value={forgotOtp}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/\D/g, '');
+                          setForgotOtp(val);
+                          if (errorMsg) setErrorMsg('');
+                        }}
+                        className="w-full bg-transparent text-center text-base tracking-[0.35em] font-mono font-bold text-slate-900 outline-hidden border-none p-0"
+                      />
+                    </div>
+                    <p className="text-[11px] text-slate-500 mt-1">
+                      Verification code expires in 10 minutes. Max 5 verification attempts allowed.
+                    </p>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading || forgotOtp.length !== 6}
+                    className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center space-x-1.5 disabled:opacity-50 cursor-pointer"
+                  >
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>{loading ? 'Verifying Identity...' : 'Verify Code & Proceed'}</span>
+                  </button>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-[11px]">
+                    <button
+                      type="button"
+                      onClick={handleVerifyAccount}
+                      disabled={loading}
+                      className="text-blue-600 font-bold hover:underline cursor-pointer"
+                    >
+                      Resend Code
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => switchMode('signin')}
+                      className="text-slate-500 hover:text-slate-800 cursor-pointer"
+                    >
+                      Cancel & Return
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* Step 3: Set New Password (Authorized with Cryptographic Reset Ticket) */}
+              {forgotStep === 3 && (
+                <form onSubmit={handleResetPassword} className="space-y-3">
+                  {/* Verified Ticket Badge */}
+                  <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center space-x-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <div className="flex-1">
+                      <div className="font-extrabold text-emerald-950 text-xs">
+                        Account Ownership Verified
+                      </div>
+                      <div className="text-[11px] text-emerald-700">
+                        Authorized to reset password for {forgotAccountInfo?.name || forgotAccountInfo?.email}
+                      </div>
+                    </div>
+                  </div>
 
                   <div>
                     <label className="block font-bold text-slate-700 mb-1">New Password</label>
@@ -879,7 +1059,7 @@ export default function AuthModal({
                       <input
                         type={forgotShowPassword ? 'text' : 'password'}
                         required
-                        placeholder="Min 6 characters"
+                        placeholder="Min 8 characters"
                         value={forgotPassword}
                         onChange={(e) => {
                           setForgotPassword(e.target.value);
@@ -897,6 +1077,33 @@ export default function AuthModal({
                       </button>
                     </div>
                   </div>
+
+                  {/* Password Rules Checklist */}
+                  {forgotPassword && (
+                    <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5 text-[10px] font-semibold text-slate-600">
+                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Security Requirements:</span>
+                      <div className="grid grid-cols-3 gap-1">
+                        <div className={`flex items-center space-x-1 p-1 rounded-lg ${
+                          forgotPassword.length >= 8 ? 'bg-emerald-100/70 text-emerald-800' : 'bg-slate-200/50 text-slate-600'
+                        }`}>
+                          <CheckCircle2 className={`w-3 h-3 ${forgotPassword.length >= 8 ? 'text-emerald-600' : 'text-slate-400'}`} />
+                          <span>8+ chars</span>
+                        </div>
+                        <div className={`flex items-center space-x-1 p-1 rounded-lg ${
+                          /\d/.test(forgotPassword) ? 'bg-emerald-100/70 text-emerald-800' : 'bg-slate-200/50 text-slate-600'
+                        }`}>
+                          <CheckCircle2 className={`w-3 h-3 ${/\d/.test(forgotPassword) ? 'text-emerald-600' : 'text-slate-400'}`} />
+                          <span>Number (0-9)</span>
+                        </div>
+                        <div className={`flex items-center space-x-1 p-1 rounded-lg ${
+                          /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?`~]/.test(forgotPassword) ? 'bg-emerald-100/70 text-emerald-800' : 'bg-slate-200/50 text-slate-600'
+                        }`}>
+                          <CheckCircle2 className={`w-3 h-3 ${/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?`~]/.test(forgotPassword) ? 'text-emerald-600' : 'text-slate-400'}`} />
+                          <span>Symbol (!@#)</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <div>
                     <label className="block font-bold text-slate-700 mb-1">Confirm New Password</label>

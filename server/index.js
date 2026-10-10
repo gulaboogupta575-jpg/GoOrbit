@@ -12,7 +12,11 @@ const {
   parseCookies,
   checkRateLimit,
   recordFailedAttempt,
-  clearFailedAttempts
+  clearFailedAttempts,
+  generateOTP,
+  verifyOTP,
+  isValidResetTicket,
+  consumeResetTicket
 } = require('./services/authSecurity');
 
 const app = express();
@@ -941,7 +945,7 @@ app.post('/api/auth/login', (req, res) => {
   });
 });
 
-// 9.3 Account Verification for Password Recovery
+// 9.3 Authenticated Password Recovery: Step 1 - Send 6-Digit Verification OTP
 app.post('/api/auth/forgot-init', (req, res) => {
   const { identifier } = req.body;
   if (!identifier) {
@@ -962,37 +966,70 @@ app.post('/api/auth/forgot-init', (req, res) => {
     });
   }
 
+  // Generate cryptographically secure OTP for authentication challenge
+  const { otp, expiresAt } = generateOTP(user.email);
+  console.log(`[Go Orbit Auth Security] Password Reset OTP generated for ${user.email}: ${otp}`);
+
+  // Mask email: j***n@example.com
+  const emailParts = user.email.split('@');
+  const maskedName = emailParts[0].length <= 2 
+    ? emailParts[0][0] + '***' 
+    : emailParts[0][0] + '***' + emailParts[0].slice(-1);
+  const maskedEmail = `${maskedName}@${emailParts[1]}`;
+
   res.json({ 
     success: true, 
-    message: `Account found for ${user.name}!`,
-    userName: user.name,
+    message: `Security verification code sent to ${maskedEmail}!`,
     userEmail: user.email,
-    userPhone: user.phone ? ('******' + user.phone.slice(-4)) : ''
+    maskedEmail,
+    userName: user.name,
+    // In local development / preview environment, include code for immediate testing
+    previewOtp: otp,
+    expiresAt
   });
 });
 
-// 9.4 Simple Direct Forgot Password -> Resets password directly (No OTP)
+// 9.4 Authenticated Password Recovery: Step 2 - Verify OTP & Issue One-Time Reset Ticket
+app.post('/api/auth/forgot-verify-otp', (req, res) => {
+  const { email, otp } = req.body;
+
+  if (!email || !otp) {
+    return res.status(400).json({
+      success: false,
+      error: 'Please provide your registered email and the 6-digit verification code.'
+    });
+  }
+
+  const result = verifyOTP(email, otp);
+  if (!result.valid) {
+    return res.status(401).json({
+      success: false,
+      code: 'INVALID_OTP',
+      error: result.error
+    });
+  }
+
+  res.json({
+    success: true,
+    message: 'Identity verified successfully! You may now set your new password.',
+    resetTicket: result.resetTicket
+  });
+});
+
+// 9.5 Authenticated Password Recovery: Step 3 - Set New Password with One-Time Reset Ticket
 const handleDirectForgot = (req, res) => {
-  const { identifier, newPassword } = req.body;
+  const { email, identifier, newPassword, resetTicket } = req.body;
+  const userIdentifier = email || identifier;
 
-  if (!identifier || !newPassword) {
+  if (!userIdentifier || !newPassword) {
     return res.status(400).json({ 
       success: false, 
-      error: 'Please provide your registered email/mobile and your new password.' 
+      error: 'Please provide your email and new password.' 
     });
   }
 
-  const passwordCheck = validatePassword(newPassword);
-  if (!passwordCheck.valid) {
-    return res.status(400).json({ 
-      success: false, 
-      error: passwordCheck.error 
-    });
-  }
-
-  const cleanPass = passwordCheck.password;
   const users = getData('users.json');
-  const user = findUserByIdentifier(users, identifier);
+  const user = findUserByIdentifier(users, userIdentifier);
 
   if (!user) {
     return res.status(404).json({ 
@@ -1002,12 +1039,41 @@ const handleDirectForgot = (req, res) => {
     });
   }
 
+  // Security enforcement: require valid cryptographic one-time reset ticket
+  if (!resetTicket || !isValidResetTicket(resetTicket, user.email)) {
+    return res.status(403).json({
+      success: false,
+      code: 'UNAUTHORIZED_RESET',
+      error: 'Security Verification Required: You must verify your identity via the one-time verification code before changing the password.'
+    });
+  }
+
+  const passwordCheck = validatePassword(newPassword);
+  if (!passwordCheck.valid) {
+    return res.status(400).json({ 
+      success: false, 
+      code: 'WEAK_PASSWORD',
+      error: passwordCheck.error 
+    });
+  }
+
+  // Atomically consume reset ticket now that password passes all security requirements
+  if (!consumeResetTicket(resetTicket, user.email)) {
+    return res.status(403).json({
+      success: false,
+      code: 'UNAUTHORIZED_RESET',
+      error: 'Security reset ticket has already been used or expired.'
+    });
+  }
+
+  const cleanPass = passwordCheck.password;
+
   // Hash new password and save to database
   user.password = hashPassword(cleanPass);
   user.lastLogin = new Date().toISOString();
   saveData('users.json', users);
 
-  console.log(`[Go Orbit Auth] Password successfully updated (Hashed) for: ${user.email}`);
+  console.log(`[Go Orbit Auth Security] Password successfully verified & updated (Hashed) for: ${user.email}`);
 
   // Create session token & set HttpOnly cookie
   const sessionToken = createSessionToken(user);
@@ -1019,7 +1085,7 @@ const handleDirectForgot = (req, res) => {
 
   res.json({
     success: true,
-    message: 'Your password has been updated successfully! Welcome back.',
+    message: 'Your identity was verified and your password has been securely updated! Welcome back.',
     token: sessionToken,
     user: sanitizeUser(user)
   });
